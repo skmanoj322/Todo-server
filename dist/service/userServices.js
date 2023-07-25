@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteItem = exports.editItem = exports.postItem = exports.register = exports.login = void 0;
+exports.getItem = exports.deleteItem = exports.editItem = exports.postItem = exports.register = exports.login = void 0;
 const User_1 = require("../model/User");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -102,3 +102,17 @@ function deleteItem(data, id) {
     });
 }
 exports.deleteItem = deleteItem;
+function getItem(data, id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const data = yield User_1.todoModel.find({
+                user: new mongoose_1.default.Types.ObjectId(id),
+            });
+            return data;
+        }
+        catch (error) {
+            throw error;
+        }
+    });
+}
+exports.getItem = getItem;

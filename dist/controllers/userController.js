@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteTodo = exports.editTodo = exports.postTodo = exports.registerOne = exports.loginOne = void 0;
+exports.getTodo = exports.deleteTodo = exports.editTodo = exports.postTodo = exports.registerOne = exports.loginOne = void 0;
 const userServices_1 = require("../service/userServices");
 const loginOne = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -65,3 +65,14 @@ const deleteTodo = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.deleteTodo = deleteTodo;
+const getTodo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req.token;
+        const todoData = yield (0, userServices_1.getItem)(req.body, id);
+        res.status(200).send(todoData);
+    }
+    catch (error) {
+        return res.status(500).send(error);
+    }
+});
+exports.getTodo = getTodo;

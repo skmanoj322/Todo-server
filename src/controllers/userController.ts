@@ -5,6 +5,7 @@ import {
   postItem,
   editItem,
   deleteItem,
+  getItem,
 } from "../service/userServices";
 import { CustomRequest } from "../middleware/auth";
 
@@ -51,6 +52,15 @@ export const deleteTodo = async (req: Request, res: Response) => {
     const id = (req as CustomRequest).token;
     await deleteItem(req.body, id);
     res.status(200).send("updated sucessfully");
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+};
+export const getTodo = async (req: Request, res: Response) => {
+  try {
+    const id = (req as CustomRequest).token;
+    const todoData = await getItem(req.body, id);
+    res.status(200).send(todoData);
   } catch (error) {
     return res.status(500).send(error);
   }

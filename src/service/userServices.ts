@@ -79,3 +79,13 @@ export async function deleteItem(data: any, id: any) {
     throw error;
   }
 }
+export async function getItem(data: any, id: any) {
+  try {
+    const data = await todoModel.find({
+      user: new mongoose.Types.ObjectId(id),
+    });
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
