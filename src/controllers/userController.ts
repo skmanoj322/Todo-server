@@ -20,8 +20,8 @@ export const loginOne = async (req: Request, res: Response) => {
 };
 export const registerOne = async (req: Request, res: Response) => {
   try {
-    await register(req.body);
-    res.status(200).send("inserted Sucessfully");
+    const user = await register(req.body);
+    res.status(200).send(user);
   } catch (error) {
     return res.status(500);
   }
@@ -51,7 +51,7 @@ export const deleteTodo = async (req: Request, res: Response) => {
   try {
     const id = (req as CustomRequest).token;
     await deleteItem(req.body, id);
-    res.status(200).send("updated sucessfully");
+    res.status(200);
   } catch (error) {
     return res.status(500).send(error);
   }
@@ -60,6 +60,7 @@ export const getTodo = async (req: Request, res: Response) => {
   try {
     const id = (req as CustomRequest).token;
     const todoData = await getItem(req.body, id);
+    // console.log(todoData);
     res.status(200).send(todoData);
   } catch (error) {
     return res.status(500).send(error);

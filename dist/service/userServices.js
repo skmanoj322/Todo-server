@@ -25,7 +25,6 @@ function login(user) {
             const userFound = yield User_1.userModel.findOne({
                 username: user.username,
             });
-            console.log(userFound);
             if (!userFound) {
                 throw new Error("Name is not found");
             }
@@ -49,7 +48,11 @@ exports.login = login;
 function register(user) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            yield User_1.userModel.create(user);
+            const userFound = yield User_1.userModel.create(user);
+            const token = jsonwebtoken_1.default.sign({ username: userFound.username, id: userFound._id }, auth_1.SECRET, {
+                expiresIn: "7d",
+            });
+            return { username: userFound.username, token, id: userFound._id };
         }
         catch (error) {
             throw error;

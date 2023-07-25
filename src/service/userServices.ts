@@ -10,7 +10,6 @@ export async function login(user: User) {
     const userFound = await userModel.findOne({
       username: user.username,
     });
-    console.log(userFound);
 
     if (!userFound) {
       throw new Error("Name is not found");
@@ -33,9 +32,17 @@ export async function login(user: User) {
   }
 }
 
-export async function register(user: User): Promise<void> {
+export async function register(user: User) {
   try {
-    await userModel.create(user);
+    const userFound = await userModel.create(user);
+    const token = jwt.sign(
+      { username: userFound.username, id: userFound._id },
+      SECRET,
+      {
+        expiresIn: "7d",
+      }
+    );
+    return { username: userFound.username, token, id: userFound._id };
   } catch (error) {
     throw error;
   }

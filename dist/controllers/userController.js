@@ -24,8 +24,8 @@ const loginOne = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.loginOne = loginOne;
 const registerOne = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield (0, userServices_1.register)(req.body);
-        res.status(200).send("inserted Sucessfully");
+        const user = yield (0, userServices_1.register)(req.body);
+        res.status(200).send(user);
     }
     catch (error) {
         return res.status(500);
@@ -58,7 +58,7 @@ const deleteTodo = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     try {
         const id = req.token;
         yield (0, userServices_1.deleteItem)(req.body, id);
-        res.status(200).send("updated sucessfully");
+        res.status(200);
     }
     catch (error) {
         return res.status(500).send(error);
@@ -69,6 +69,7 @@ const getTodo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const id = req.token;
         const todoData = yield (0, userServices_1.getItem)(req.body, id);
+        // console.log(todoData);
         res.status(200).send(todoData);
     }
     catch (error) {
